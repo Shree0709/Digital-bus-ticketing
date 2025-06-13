@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+  <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h1 class="text-3xl font-bold mb-4 text-center">Admin Dashboard</h1>
+    <div class="overflow-x-auto">
+      <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr class="bg-gray-200">
+            <th class="border px-4 py-2">Ticket ID</th>
+            <th class="border px-4 py-2">Name</th>
+            <th class="border px-4 py-2">Destination</th>
+            <th class="border px-4 py-2">Tickets</th>
+            <th class="border px-4 py-2">Total Fare</th>
+            <th class="border px-4 py-2">Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="ticketTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const tableBody = document.getElementById("ticketTableBody");
+    fetch("http://localhost:5000/api/tickets")
+      .then(res => res.json())
+      .then(data => {
+        if (data.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="text-center p-4">No tickets found.</td></tr>`;
+          return;
+        }
+
+        data.forEach(ticket => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td class="border px-4 py-2">${ticket.ticketId}</td>
+            <td class="border px-4 py-2">${ticket.name}</td>
+            <td class="border px-4 py-2">${ticket.destination}</td>
+            <td class="border px-4 py-2">${ticket.tickets}</td>
+            <td class="border px-4 py-2">₹${ticket.totalFare}</td>
+            <td class="border px-4 py-2">${ticket.timestamp}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(err => {
+        console.error("Error fetching tickets:", err);
+        tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-red-600 p-4">Failed to load tickets</td></tr>`;
+      });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+    
