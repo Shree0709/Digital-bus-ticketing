@@ -9,8 +9,10 @@ const ticketRoutes = require('./routes/tickets');
 const Ticket = require('./models/Ticket'); // ✅ Import the Ticket model
 
 const app = express();
-const PORT = process.env.PORT || 4000;
-
+const port = process.env.PORT || 4000;
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Server running on port ${port}`);
+});
 
 app.use(cors());
 app.use(express.json());
