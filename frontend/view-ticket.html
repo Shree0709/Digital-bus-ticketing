@@ -39,7 +39,7 @@
     const name = document.getElementById("nameInput").value.trim();
 
     try {
-      const res = await fetch(`http://localhost:5000/api/tickets/name/${encodeURIComponent(name)}`);
+      const res = await fetch(`https://digital-bus-ticketing.onrender.com/api/tickets/name/${encodeURIComponent(name)}`);
       if (!res.ok) throw new Error();
 
       const ticket = await res.json();
@@ -52,7 +52,7 @@
       const qrContainer = document.getElementById("qrcode");
       qrContainer.innerHTML = "";
       new QRCode(qrContainer, {
-        text: `https://yourdomain.com/ticket?name=${encodeURIComponent(ticket.name)}`,
+        text: `https://digital-bus-ticketing.onrender.com/tickets?name=${encodeURIComponent(ticket.name)}`,
         width: 128,
         height: 128
       });
